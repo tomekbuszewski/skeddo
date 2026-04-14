@@ -4,7 +4,7 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "module": "esnext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "@testing-library/jest-dom", "vitest/globals"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -19,10 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "components/*": ["./src/components/*/index.tsx"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
 }
