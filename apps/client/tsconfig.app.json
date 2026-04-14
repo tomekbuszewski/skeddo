@@ -19,10 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "components/*": ["./src/components/*/index.tsx"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
 }
