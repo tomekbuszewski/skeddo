@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     globals: true,
     root: "./",
+    globalSetup: "./test/testcontainers.setup.ts",
   },
   plugins: [
     swc.vite({
