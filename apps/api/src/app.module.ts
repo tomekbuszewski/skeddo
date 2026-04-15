@@ -3,6 +3,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
 import { DbModule } from "./db/db.module";
+import { EventModule } from './domains/event/event.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { DbModule } from "./db/db.module";
       isGlobal: true,
     }),
     DbModule,
+    EventModule,
   ],
   controllers: [AppController],
   providers: [AppService],

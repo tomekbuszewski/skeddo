@@ -1,31 +1,28 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { ConfigModule } from "@nestjs/config";
-
-import { createTestDb } from "../../test/create-test-db";
+import { type TestingModule } from "@nestjs/testing";
 import { DbService } from "./db.service";
+import { createTestingModule } from "@skeddo/testing";
+import { ConfigModule } from "@nestjs/config";
 
 describe("DbService", () => {
   let service: DbService;
   let module: TestingModule;
   let cleanup: () => Promise<void>;
-  let connectionUri;
+  let connectionUri = "not the value you want";
 
   beforeAll(async () => {
-    const testDb = await createTestDb(DbService.name);
-    cleanup = testDb.cleanup;
-    connectionUri = testDb.connectionUri;
-
-    module = await Test.createTestingModule({
-      providers: [DbService],
+    const testing = await createTestingModule<DbService>(DbService, (uri: string) => ({
       imports: [
         ConfigModule.forRoot({
           ignoreEnvFile: true,
-          load: [() => ({ DATABASE_URL: connectionUri })],
+          load: [() => ({ DATABASE_URL: uri })],
         }),
       ],
-    }).compile();
+    }));
 
-    service = module.get<DbService>(DbService);
+    service = testing.service;
+    module = testing.module;
+    cleanup = testing.cleanup;
+    connectionUri = testing.uri;
   });
 
   afterAll(async () => {
