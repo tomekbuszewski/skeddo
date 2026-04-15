@@ -1,0 +1,31 @@
+{
+  "name": "@skeddo/testing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "pg": "catalog:"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "*",
+    "@nestjs/testing": "*"
+  },
+  "devDependencies": {
+    "@nestjs/common": "catalog:",
+    "@nestjs/testing": "catalog:",
+    "@types/pg": "catalog:",
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "vitest": "catalog:"
+  }
+}
