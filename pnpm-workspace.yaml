@@ -34,3 +34,6 @@ catalog:
   pg: ^8.20.0
   "@nestjs/testing": ^11.0.1
   "@types/pg": ^8.20.0
+  "drizzle-orm": ^0.45.2
+  "drizzle-seed": ^0.3.1
+  tsdown: ^0.21.8

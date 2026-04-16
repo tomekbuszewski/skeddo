@@ -6,17 +6,16 @@
   "exports": {
     ".": {
       "types": "./src/client.ts",
-      "default": "./dist/client.js"
+      "default": "./dist/client.mjs"
     }
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsdown",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
-    "drizzle-orm": "^0.45.2",
-    "drizzle-seed": "^0.3.1",
+    "drizzle-orm": "catalog:",
     "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "pg": "^8.20.0"
@@ -26,6 +25,7 @@
     "@types/pg": "^8.20.0",
     "drizzle-kit": "^0.31.10",
     "testcontainers": "^11.14.0",
+    "tsdown": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

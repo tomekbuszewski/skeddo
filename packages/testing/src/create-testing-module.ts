@@ -12,26 +12,32 @@ interface CreateTestingModuleWithDb<T> extends CreateTestingModule<T> {
   cleanup: () => Promise<void>;
 }
 
+interface DbOptions {
+  withDb?: boolean;
+  schema?: Record<string, unknown>;
+}
+
 export async function createTestingModule<T>(
   baseService: Provider & { name: string },
   metadata?: ModuleMetadata | ((uri: string) => ModuleMetadata),
-  withDb?: true,
+  options?: DbOptions & { withDb?: true },
 ): Promise<CreateTestingModuleWithDb<T>>;
 export async function createTestingModule<T>(
   baseService: Provider & { name: string },
   metadata: ModuleMetadata,
-  withDb: false,
+  options: DbOptions & { withDb: false },
 ): Promise<CreateTestingModule<T>>;
 export async function createTestingModule<T>(
   baseService: Provider & { name: string },
   metadata: ModuleMetadata | ((uri: string) => ModuleMetadata) = {},
-  withDb = true,
+  options: DbOptions = {},
 ): Promise<CreateTestingModule<T> | CreateTestingModuleWithDb<T>> {
+  const { withDb = true, schema } = options;
   let resolvedMetadata: ModuleMetadata;
   let db: { connectionUri: string; cleanup: () => Promise<void> } | undefined;
 
   if (withDb) {
-    db = await createTestDb(baseService.name);
+    db = await createTestDb(baseService.name, schema);
     resolvedMetadata = typeof metadata === "function" ? metadata(db.connectionUri) : metadata;
   } else {
     resolvedMetadata = metadata as ModuleMetadata;
@@ -48,5 +54,10 @@ export async function createTestingModule<T>(
     return { service, module };
   }
 
-  return { service, module, cleanup: db.cleanup, uri: db.connectionUri };
+  return {
+    service,
+    module,
+    cleanup: db.cleanup,
+    uri: db.connectionUri,
+  };
 }
