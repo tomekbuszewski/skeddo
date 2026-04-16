@@ -71,7 +71,7 @@ describe("domains / event / repository", () => {
   });
 
   it("should allow to fetch up to 10 events at once by their ids", async () => {
-    const result = await repository.getEventsByIds(ids.slice(0, 10));
+    const result = await repository.getEventsById(ids.slice(0, 10));
     expect(result.length).toBe(10);
   });
 
@@ -91,14 +91,14 @@ describe("domains / event / repository", () => {
     const creation = await createRandomEvent();
     const result = await repository.getEventById(creation.id);
 
-    expect(result.created_at).toBeGreaterThan(0);
-    expect(result.modified_at).toBeGreaterThan(0);
-    expect(result.modified_at).toEqual(result.created_at);
+    expect(result.created_at.getTime()).toBeGreaterThan(0);
+    expect(result.modified_at.getTime()).toBeGreaterThan(0);
+    expect(result.modified_at.getTime()).toEqual(result.created_at.getTime());
   });
 
   it("should allow to edit event", async () => {
     const creation = await createRandomEvent();
-    const result = await repository.editEvent(creation.id, {
+    const result = await repository.editEventById(creation.id, {
       name: "Buzz cut",
     });
 
@@ -112,11 +112,11 @@ describe("domains / event / repository", () => {
     const creation = await createRandomEvent();
 
     vi.setSystemTime(new Date("2026-01-01T00:01:00Z"));
-    const result = await repository.editEvent(creation.id, {
+    const result = await repository.editEventById(creation.id, {
       name: "Buzz cut",
     });
 
-    expect(result.modifiedAt).toBeGreaterThan(result.createdAt);
+    expect(result.modified_at.getTime()).toBeGreaterThan(result.created_at.getTime());
 
     vi.useRealTimers();
   });

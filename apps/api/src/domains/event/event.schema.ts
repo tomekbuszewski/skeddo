@@ -11,9 +11,10 @@ import {
 import { sql } from "drizzle-orm";
 
 const defaultFields = {
-  created_at: timestamp("createdAt").defaultNow(),
+  created_at: timestamp("createdAt").notNull().$default(() => new Date()),
   modified_at: timestamp("modifiedAt")
-    .defaultNow()
+    .notNull()
+    .$default(() => new Date())
     .$onUpdate(() => new Date()),
   id: uuid()
     .primaryKey()
